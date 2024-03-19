@@ -1,0 +1,11 @@
+CREATE TABLE Member (
+    MemberID INT PRIMARY KEY IDENTITY(1,1),
+    FirstName VARCHAR (50) NOT NULL,
+    LastName VARCHAR (50) NOT NULL,
+    Email VARCHAR(255) NOT NULL UNIQUE,
+    JoinDate DATE DEFAULT GETDATE(),
+    ApiKey NVARCHAR(255) UNIQUE,
+    ApiKeyActivationDate DATE DEFAULT GETDATE(),
+    ApiKeyDeactivationDate DATE DEFAULT DATEADD(YEAR, 1, GETDATE()),
+    IsAdmin BIT DEFAULT 0
+);
