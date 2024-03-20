@@ -70,7 +70,7 @@ public class ValidatePermissionsFilter : ActionFilterAttribute
         // Get today
         DateTime dateTimeToday = DateTime.Today;
         DateOnly dateOnlyToday = new DateOnly(dateTimeToday.Year, dateTimeToday.Month, dateTimeToday.Day);
-        return _dbContext?.Member.Where(m => m.ApiKey == HashApiKey(apiKey)).SingleOrDefault();
+        return _dbContext?.Member.Where(m => m.ApiKey == HashApiKey(apiKey) && m.ApiKeyActivationDate <= dateOnlyToday && m.ApiKeyDeactivationDate >= dateOnlyToday).SingleOrDefault();
     }
 
     // Hash the API key
