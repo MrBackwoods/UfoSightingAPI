@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace UfoSightingAPI.Models;
+﻿namespace UfoSightingAPI.Models;
 
 public partial class Sighting
 {

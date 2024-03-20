@@ -50,14 +50,14 @@ namespace UfoSightingAPI.Controllers
         }
 
         // PRIVATE: Get all sightings per year with full details
-        [HttpGet("withDetails/byYear/{year}"), ValidatePermissions(NeedsAdminRights = false)]
+        [HttpGet("withDetails/byYear/{year}"), ValidatePermissionsFilter(NeedsAdminRights = false)]
         public async Task<ActionResult<IEnumerable<Sighting>>> GetSightingsWithDetails(int year)
         {
             return await _dBContext.Sighting.Where(s => s.Occurred.Year == year).ToListAsync();
         }
 
         // PRIVATE: Get a single sighting - with full details
-        [HttpGet("withDetails/byId/{id}"), ValidatePermissions(NeedsAdminRights = false)]
+        [HttpGet("withDetails/byId/{id}"), ValidatePermissionsFilter(NeedsAdminRights = false)]
         public async Task<ActionResult<Sighting>> GetSightingWithDetails(int id)
         {
             var sighting = await _dBContext.Sighting.FindAsync(id);
@@ -71,11 +71,11 @@ namespace UfoSightingAPI.Controllers
         }
 
         // PRIVATE: Post a new sighting
-        [HttpPost, ValidatePermissions(NeedsAdminRights = false)]
+        [HttpPost, ValidatePermissionsFilter(NeedsAdminRights = false)]
         public async Task<ActionResult<Sighting>> PostSighting(Sighting sighting)
         {
-            int memberID = HttpContext.Items[ValidatePermissions._memberIDKey] as int? ?? 0;
-            
+            int memberID = HttpContext.Items[ValidatePermissionsFilter._memberIDKey] as int? ?? 0;
+
             if (memberID == 0)
             {
                 return BadRequest("Invalid member ID.");
@@ -83,13 +83,14 @@ namespace UfoSightingAPI.Controllers
 
             sighting.Reported = DateTime.Now;
             sighting.ReportedBy = memberID;
+            sighting.SightingId = 0;
             _dBContext.Sighting.Add(sighting);
             await _dBContext.SaveChangesAsync();
             return Ok("Sighting added successfully.");
         }
 
         // PRIVATE, ADMIN: Delete a sighting
-        [HttpDelete("{id}"), ValidatePermissions(NeedsAdminRights = true)]
+        [HttpDelete("{id}"), ValidatePermissionsFilter(NeedsAdminRights = true)]
         public async Task<IActionResult> DeleteSighting(int id)
         {
             var sighting = await _dBContext.Sighting.FindAsync(id);
@@ -105,7 +106,7 @@ namespace UfoSightingAPI.Controllers
         }
 
         // PRIVATE, ADMIN: Update a sighting - note that no partial updates are allowed
-        [HttpPut("{id}"), ValidatePermissions(NeedsAdminRights = true)]
+        [HttpPut("{id}"), ValidatePermissionsFilter(NeedsAdminRights = true)]
         public async Task<IActionResult> PutSighting(int id, Sighting sighting)
         {
             if (id != sighting.SightingId)

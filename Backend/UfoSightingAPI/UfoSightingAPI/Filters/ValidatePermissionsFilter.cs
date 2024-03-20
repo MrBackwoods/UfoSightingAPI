@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Cryptography;
 using System.Text;
-using UfoSightingAPI.Controllers;
 using UfoSightingAPI.Models;
 
-public class ValidatePermissions : ActionFilterAttribute
+public class ValidatePermissionsFilter : ActionFilterAttribute
 {
     private UfoSightingDBContext? _dbContext;
     public const string _apiKeyKey = "ApiKey";
