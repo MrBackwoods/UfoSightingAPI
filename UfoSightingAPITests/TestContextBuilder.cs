@@ -21,10 +21,15 @@ namespace UfoSightingAPITests
                 new Sighting { SightingId = 2, Occurred = DateTime.Today, Latitude = (decimal)46.0, Longitude = (decimal)46.0, Description = "test" }
             );
 
-            context.Member.AddRange(
-                new Member { MemberId = 1, ApiKey = "MyRhy0ZUmHpWJL+Q5FYTy7SD58RVJwJV1QjWlMstfX0=", FirstName = "A", LastName = "B", Email = "A@B.fi" }
-            );
+            // Calculate days
+            DateTime dateTimeToday = DateTime.Today;
+            DateOnly dateOnlyToday = new DateOnly(dateTimeToday.Year, dateTimeToday.Month, dateTimeToday.Day);
+            DateOnly dateOnlyYearFromNow = dateOnlyToday.AddYears(1);
 
+            context.Member.AddRange(
+                new Member { MemberId = 1, ApiKey = "MyRhy0ZUmHpWJL+Q5FYTy7SD58RVJwJV1QjWlMstfX0=", FirstName = "A", LastName = "B", Email = "A@B.fi", ApiKeyActivationDate = dateOnlyToday, ApiKeyDeactivationDate = dateOnlyYearFromNow }
+            );
+            
             context.SaveChanges();
             return context;
         }
