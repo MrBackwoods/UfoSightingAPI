@@ -12,7 +12,7 @@ The API currently has these endpoints. Some are public, some are private requiri
 - GET Sightingw/ithDetails/byId/{id} (private, used to a sighting by id with all details)
 - POST Sighting (private, used to post a new sighting by id)
 - DELETE Sighting{id} (private admin, used to delete a sighting by id)
-- PUT Sighting{id} (private admin), used to update a sighting
+- PUT Sighting{id} (private admin, used to update a sighting)
 
 This project definetely is still work <strong>in progress</strong>. List of things to do include:
 - Logging
