@@ -11,3 +11,4 @@ This project definetely is still work in progress. List of things to do include:
 - More test cases
 - Commeting
 - Refactoring
+- Improved authentication
