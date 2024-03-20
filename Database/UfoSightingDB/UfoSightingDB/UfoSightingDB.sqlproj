@@ -64,6 +64,6 @@
     <Build Include="Tables\Member.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Scripts\DummyData.PostDeployment.sql" />
+    <None Include="Scripts\DummyData.sql" />
   </ItemGroup>
 </Project>
