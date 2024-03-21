@@ -97,4 +97,24 @@ public class ValidatePermissionsTests
         Assert.Equal("Access denied.", contentResult?.Content);
         Assert.Equal(StatusCodes.Status403Forbidden, contentResult?.StatusCode);
     }
+
+    [Fact]
+    // Verify that delete method has permission control
+    public void DeleteSighting_Has_ValidatePermissionsFilter()
+    {
+        var controllerType = typeof(SightingController);
+        var deleteMethod = controllerType.GetMethod("DeleteSighting");
+        var attributes = deleteMethod?.GetCustomAttributes(typeof(ValidatePermissionsFilter), true);
+        Assert.NotNull(attributes?.SingleOrDefault());
+    }
+
+    [Fact]
+    // Verify that GetSightingsLimited method does not have permission control
+    public void GetSightingsLimited_Has_Not_ValidatePermissionsFilter()
+    {
+        var controllerType = typeof(SightingController);
+        var deleteMethod = controllerType.GetMethod("GetSightingsLimited");
+        var attributes = deleteMethod?.GetCustomAttributes(typeof(ValidatePermissionsFilter), true);
+        Assert.Null(attributes?.SingleOrDefault());
+    }
 }
