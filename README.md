@@ -21,3 +21,4 @@ This project definetely is still work <strong>in progress</strong>. List of thin
 - Commenting
 - Refactoring
 - Improved authentication
+- React front for a public endpoint
